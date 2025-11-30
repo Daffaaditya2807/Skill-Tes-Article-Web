@@ -19,7 +19,9 @@
 <body class="bg-gray-50">
 
     {{-- Navigation --}}
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200"
+        x-data="{ mobileMenuOpen: false, scrolled: false }" x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 20 })"
+        :class="{ 'shadow-md': scrolled }">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 {{-- Logo --}}
@@ -27,17 +29,39 @@
                     <span class="text-xl font-bold text-gray-900">InfoNow!</span>
                 </a>
 
-                {{-- Navigation Links --}}
-                <div class="flex items-center gap-6">
+                {{-- Desktop Navigation --}}
+                <div class="hidden md:flex items-center gap-8">
                     <a href="{{ route('landing') }}"
                         class="text-gray-700 hover:text-blue-600 transition font-medium">Beranda</a>
-                    <a href="{{ route('article.list') }}" class="text-blue-600 font-semibold">Semua Artikel</a>
+                    <a href="{{ route('landing') }}#about"
+                        class="text-gray-700 hover:text-blue-600 transition font-medium">Tentang</a>
+                    <a href="{{ route('article.list') }}" class="text-blue-600 font-semibold">Artikel</a>
                     <a href="{{ route('login') }}"
                         class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-medium flex items-center gap-2">
                         <span class="material-icons text-sm">login</span>
                         Masuk
                     </a>
                 </div>
+
+                {{-- Mobile Menu Button --}}
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 text-gray-700">
+                    <span class="material-icons" x-show="!mobileMenuOpen">menu</span>
+                    <span class="material-icons" x-show="mobileMenuOpen">close</span>
+                </button>
+            </div>
+
+            {{-- Mobile Navigation --}}
+            <div x-show="mobileMenuOpen" x-transition class="md:hidden py-4 space-y-3">
+                <a href="{{ route('landing') }}"
+                    class="block text-gray-700 hover:text-blue-600 transition font-medium py-2">Beranda</a>
+                <a href="{{ route('landing') }}#about"
+                    class="block text-gray-700 hover:text-blue-600 transition font-medium py-2">Tentang</a>
+                <a href="{{ route('article.list') }}"
+                    class="block text-blue-600 font-semibold transition font-medium py-2">Artikel</a>
+                <a href="{{ route('login') }}"
+                    class="block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-medium text-center">
+                    Masuk
+                </a>
             </div>
         </div>
     </nav>

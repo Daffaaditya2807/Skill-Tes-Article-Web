@@ -25,9 +25,6 @@
             <div class="flex items-center justify-between h-16">
                 {{-- Logo --}}
                 <div class="flex items-center gap-2">
-                    {{-- <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                        <span class="material-icons text-white">article</span>
-                    </div> --}}
                     <span class="text-xl font-bold text-gray-900">InfoNow!</span>
                 </div>
 
@@ -181,8 +178,7 @@
                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                             @else
                                 <img src="{{ $article->image ? asset('storage/' . $article->image) : '' }}"
-                                    alt="{{ $article->title }}"
-                                    class="w-full h-48 object-cover" style="display: none;"
+                                    alt="{{ $article->title }}" class="w-full h-48 object-cover" style="display: none;"
                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                             @endif
                             <div class="w-full h-48 bg-linear-to-br from-gray-100 to-gray-200 border-2 border-dashed border-gray-300 flex items-center justify-center"
