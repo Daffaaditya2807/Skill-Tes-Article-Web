@@ -55,7 +55,7 @@
                     class="block text-gray-700 hover:text-blue-600 transition font-medium py-2">Articles</a>
                 <a href="{{ route('login') }}"
                     class="block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-medium text-center">
-                    Sign In
+                    Masuk
                 </a>
             </div>
         </div>
