@@ -35,7 +35,6 @@
 | **Tailwind CSS** | 4.x | CSS Framework untuk styling |
 | **Alpine.js** | 3.x | JavaScript framework untuk interaktivitas |
 | **Vite** | 7.x | Build tool & HMR |
-| **SQLite** | - | Database default (support MySQL/PostgreSQL) |
 | **DataTables** | - | Table dengan search, sort, pagination |
 | **jQuery** | - | JavaScript library |
 
@@ -192,122 +191,10 @@ php artisan queue:work
 
 ---
 
-## 📁 Struktur Proyek
-
-```
-article-web/
-├── app/
-│   ├── Http/
-│   │   └── Controllers/
-│   │       ├── Auth/              # Login, Register, Logout
-│   │       ├── Dashboard/         # Dashboard, Article CRUD
-│   │       └── Landing/           # Landing page, Article public
-│   └── Models/
-│       ├── User.php               # User model
-│       └── Article.php            # Article model
-├── database/
-│   ├── migrations/                # Database migrations
-│   └── seeders/                   # Database seeders
-├── public/
-│   └── storage/                   # Symbolic link ke storage
-├── resources/
-│   ├── css/
-│   │   └── app.css               # Tailwind CSS entry point
-│   ├── js/
-│   │   └── app.js                # JavaScript entry point
-│   └── views/
-│       ├── dashboard/
-│       │   ├── layouts/          # Dashboard layout
-│       │   ├── partials/         # Header, Sidebar, Footer
-│       │   └── page/             # Dashboard pages
-│       └── landing/
-│           ├── partials/         # Landing footer
-│           ├── index.blade.php   # Landing page
-│           ├── list-article.blade.php
-│           └── detail-article.blade.php
-├── routes/
-│   └── web.php                   # Web routes
-├── storage/
-│   └── app/
-│       └── public/
-│           └── articles/         # Upload artikel
-├── .env                          # Environment variables
-├── composer.json                 # PHP dependencies
-├── package.json                  # Node.js dependencies
-├── vite.config.js               # Vite configuration
-└── tailwind.config.js           # Tailwind CSS configuration
-```
-
 ---
 
-## 🔑 Fitur Detail
 
-### 1. Autentikasi
-
-- **Register**: Pendaftaran user baru
-- **Login**: Masuk ke dashboard
-- **Logout**: Keluar dari sistem (dengan konfirmasi)
-
-### 2. Dashboard
-
-- **Statistik Real-time**:
-  - Total artikel diunggah
-  - Jumlah admin
-  - Artikel hari ini
-- **Tabel artikel hari ini** dengan search & pagination
-
-### 3. Manajemen Artikel
-
-- **Create**: Buat artikel baru dengan gambar
-- **Read**: Lihat daftar & detail artikel
-- **Update**: Edit artikel & gambar
-- **Delete**: Hapus artikel (dengan konfirmasi)
-- **Search**: Cari artikel berdasarkan judul/slug/deskripsi
-- **Pagination**: DataTables otomatis
-
-### 4. Landing Page
-
-- **Hero Section**: Banner utama
-- **About Section**: Tentang platform
-- **3 Artikel Terbaru**: Card artikel dengan gambar
-- **View All**: Link ke halaman semua artikel
-
-### 5. Halaman Artikel
-
-- **List Artikel**: Semua artikel dengan pagination
-- **Detail Artikel**:
-  - Featured image
-  - Judul & konten
-  - Tanggal & waktu publikasi
-  - Share: WhatsApp & Copy Link
-
-### 6. Handling Gambar
-
-- **Upload**: Support jpg, jpeg, png, gif (max 2MB)
-- **Preview**: Preview sebelum upload
-- **Fallback**: Placeholder otomatis jika file tidak ada
-- **Dual Protection**: Server-side & client-side check
-
----
-
-## 🎨 Komponen Reusable
-
-### Footer Partial
-
-Footer di landing page menggunakan partial:
-
-```blade
-@include('landing.partials.footer')
-```
-
-**Keuntungan**:
-- DRY (Don't Repeat Yourself)
-- Update 1 file, berubah di semua halaman
-- Konsisten di semua page
-
----
-
-## 🛠️ Command Berguna
+## 🛠️ Command
 
 ### Development
 
@@ -376,101 +263,9 @@ php artisan make:migration create_table_name
 php artisan make:seeder NamaSeeder
 ```
 
----
-
-## 🐛 Troubleshooting
-
-### Error: "Class 'Storage' not found"
-
-```bash
-composer dump-autoload
-```
-
-### Error: "Vite manifest not found"
-
-```bash
-npm run build
-```
-
-### Error: "SQLSTATE[HY000]: General error"
-
-```bash
-php artisan migrate:fresh
-```
-
-### Gambar tidak muncul
-
-```bash
-php artisan storage:link
-```
-
-### Port 8000 sudah digunakan
-
-```bash
-php artisan serve --port=8001
-```
-
-### CSS/JS tidak update
-
-```bash
-# Clear browser cache
-# atau
-npm run build
-```
 
 ---
 
-## 📝 Route List
-
-### Public Routes
-
-| Method | URI | Name | Deskripsi |
-|--------|-----|------|-----------|
-| GET | `/` | `landing` | Landing page |
-| GET | `/articles` | `article.list` | Semua artikel |
-| GET | `/article/{slug}` | `article.detail` | Detail artikel |
-| GET | `/login` | `login` | Login page |
-| POST | `/login` | `login.submit` | Login action |
-| GET | `/register` | `register` | Register page |
-| POST | `/register` | `register.submit` | Register action |
-
-### Protected Routes (Auth Required)
-
-| Method | URI | Name | Deskripsi |
-|--------|-----|------|-----------|
-| GET | `/dashboard` | `dashboard.index` | Dashboard |
-| GET | `/article` | `dashboard.article.index` | List artikel |
-| GET | `/article/create` | `dashboard.article.create` | Form create |
-| POST | `/article` | `dashboard.article.store` | Store artikel |
-| GET | `/article/{id}/edit` | `dashboard.article.edit` | Form edit |
-| PUT | `/article/{id}` | `dashboard.article.update` | Update artikel |
-| DELETE | `/article/{id}` | `dashboard.article.destroy` | Delete artikel |
-| POST | `/logout` | `logout` | Logout |
-
----
-
-## 🔒 Keamanan
-
-- ✅ **CSRF Protection** - Token CSRF di semua form
-- ✅ **SQL Injection** - Eloquent ORM dengan prepared statements
-- ✅ **XSS Protection** - Blade template auto-escaping
-- ✅ **Authentication** - Middleware auth untuk protected routes
-- ✅ **File Upload Validation** - Validasi type & size
-- ✅ **Password Hashing** - Bcrypt hashing
-
----
-
-## 🤝 Kontribusi
-
-Kontribusi sangat diterima! Silakan:
-
-1. Fork repository
-2. Buat branch fitur (`git checkout -b feature/AmazingFeature`)
-3. Commit perubahan (`git commit -m 'Add some AmazingFeature'`)
-4. Push ke branch (`git push origin feature/AmazingFeature`)
-5. Buat Pull Request
-
----
 
 ## 📄 License
 
@@ -478,11 +273,6 @@ Proyek ini menggunakan [MIT License](https://opensource.org/licenses/MIT).
 
 ---
 
-## 👨‍💻 Developer
-
-Dikembangkan dengan ❤️ menggunakan Laravel 12
-
----
 
 ## 📞 Support
 
@@ -490,4 +280,3 @@ Jika ada pertanyaan atau masalah, silakan buat issue di repository ini.
 
 ---
 
-**Selamat Coding! 🚀**
